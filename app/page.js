@@ -19,8 +19,7 @@ export default function Home() {
       {loading ? (
         <Loader />
       ) : (
-        // <div>loading...</div>
-        <main className="w-full h-full font-picoopic px-4">
+        <main className="w-full h-full font-picoopic px-4 pt-4">
           <Logo />
           <Header />
           <MenuItem />
