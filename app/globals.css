@@ -2,8 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "picoopic";
+  src: url("../public/fonts/picoopic-Medium.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "picoopic";
+  src: url("../public/fonts/picoopic-Medium.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  background-color: green;
+  font-family: "picoopic", sans-serif;
+  background-color: #fff;
+  width: 100%;
+  height: 100%;
 }
 
 ::-webkit-scrollbar {

@@ -1,10 +1,31 @@
-import Image from "next/image";
-import { Header } from "./Components/Header/Header";
+"use client";
+import { Logo } from "@/Components/Logo/Logo";
+import { Header } from "../Components/Header/Header";
+import { MenuItem } from "@/Components/MenuItem/MenuItem";
+import { useEffect, useState } from "react";
+import { Loader } from "@/Components/Loader/Loader";
 
 export default function Home() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 2200);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <main className="">
-      <Header />
-    </main>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        // <div>loading...</div>
+        <main className="w-full h-full font-picoopic px-4">
+          <Logo />
+          <Header />
+          <MenuItem />
+        </main>
+      )}
+    </>
   );
 }
