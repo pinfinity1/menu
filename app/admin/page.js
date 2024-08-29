@@ -48,9 +48,3 @@ export default function Admin() {
     </main>
   );
 }
-
-//product category
-//product image
-//product name
-//product detail
-//product price

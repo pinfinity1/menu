@@ -12,7 +12,7 @@ export const CategoryForm = () => {
 
       <form className="mt-4 h-[calc(100%_-_92px)]">
         <div className="w-full h-full flex flex-col p-4 border rounded">
-          <div className="w-1/2 mb-6">
+          <div className="w-1/2">
             <label className="mb-2.5 block font-medium text-black mr-1">
               دسته بندی
             </label>
