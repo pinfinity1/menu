@@ -7,7 +7,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import { BounceLoader } from "react-spinners";
 
 export default function Admin() {
-  const [showForm, setShowFom] = useState("category");
+  const [showForm, setShowFom] = useState("product");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

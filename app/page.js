@@ -19,7 +19,7 @@ export default function Home() {
       {loading ? (
         <Loader />
       ) : (
-        <main className="w-full h-full font-picoopic px-4 pt-4">
+        <main className="w-full relative md:max-w-[80%] lg:max-w-[40%] mx-auto h-full border shadow font-picoopic px-4 pt-4">
           <Logo />
           <Header />
           <MenuItem />
