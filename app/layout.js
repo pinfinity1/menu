@@ -1,8 +1,9 @@
+import Head from "next/head";
 import "./globals.css";
 
 export const metadata = {
-  title: "Menu",
-  description: "This Is Menu For Anyone Who Want It",
+  title: "Green FastFood",
+  description: "ُThe First Handmade FastFood",
 };
 
 export default function RootLayout({ children }) {

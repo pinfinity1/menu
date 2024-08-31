@@ -1,3 +1,4 @@
+import { persianPrice } from "@/utils/persianPrice";
 import Image from "next/image";
 import { useState } from "react";
 import Select from "react-dropdown-select";
@@ -5,6 +6,12 @@ import { CiImageOff } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 
 export const ProductForm = () => {
+  const [productValue, setProductValue] = useState({
+    category: "",
+    name: "",
+    description: "",
+    price: 0,
+  });
   const [file, setFile] = useState();
 
   const saveImage = (e) => {
@@ -18,11 +25,12 @@ export const ProductForm = () => {
     { id: 1, title: "همبرگر" },
     { id: 2, title: "پیتزا" },
   ];
-  //product category
-  //product image
-  //product name
-  //product detail
-  //product price
+
+  const handleSetProductValue = (e) => {
+    e.preventDefault();
+    setProductValue({ ...productValue, [e.target.name]: e.target.value });
+  };
+
   return (
     <div dir="rtl" className="w-full h-full flex">
       <form className="w-1/2 p-4 ml-4 border rounded shadow relative">
@@ -94,8 +102,8 @@ export const ProductForm = () => {
           </label>
           <div className="relative mt-2">
             <input
-              // onChange={}
-              name="productName"
+              onChange={handleSetProductValue}
+              name="name"
               type="text"
               placeholder="نام محصول"
               className="w-full text-right text-sm rounded-lg border border-stroke px-4 py-3 text-black bg-transparent outline-none  "
@@ -109,23 +117,23 @@ export const ProductForm = () => {
             محتویات محصول
           </h2>
           <textarea
-            // onChange={handleChange}
-            name="productDetails"
+            onChange={handleSetProductValue}
+            name="description"
             placeholder="محتویات محصول را بنویسید"
             rows={4}
-            className="w-full px-4 py-3 text-right  border rounded text-sm bg-transparent outline-none transition-colors resize-none"
+            className="w-full px-4 py-3 text-right  border rounded-lg text-sm bg-transparent outline-none transition-colors resize-none"
           />
         </div>
 
         {/* this is for product price */}
-        <div className="w-full">
+        <div className="w-1/2">
           <label className="text-xs text-gray-700 text-right w-full font-bold pr-1">
             قمیت محصول
           </label>
           <div className="relative mt-2">
             <input
-              // onChange={}
-              name="productName"
+              onChange={handleSetProductValue}
+              name="price"
               type="number"
               placeholder="قیمت محصول"
               className=" appearance-none w-full text-right text-sm rounded-lg border border-stroke px-4 py-3 text-black bg-transparent outline-none  "
@@ -146,8 +154,8 @@ export const ProductForm = () => {
           <div className="w-[280px] h-[280px] mx-auto overflow-hidden">
             <Image
               src={URL.createObjectURL(file)}
-              alt={`preview test`}
-              className="w-full h-full"
+              alt={"product image"}
+              className="w-full h-full object-cover"
               width={0}
               height={0}
             />
@@ -157,9 +165,28 @@ export const ProductForm = () => {
             <CiImageOff className="w-20 h-20 text-gray-300" />
           </div>
         )}
-        <div>
-          <p>دسته بندی:</p>
-          <p>کامل نشده</p>
+        <div className="w-full bg-gray-100 rounded drop-shadow p-4 mt-4">
+          <div className="flex items-center gap-2 text-sm mb-3">
+            <p>دسته بندی:</p>
+            <p className="text-primaryDark">{productValue?.category}</p>
+          </div>
+          <div className="flex items-center gap-2 text-sm mb-3">
+            <p>نام محصول:</p>
+            <p>{productValue?.name}</p>
+          </div>
+          <div className="flex gap-2 text-sm text-justify mb-3">
+            <p>محتویات:</p>
+            <p>{productValue?.description}</p>
+          </div>
+          <div className="w-1/3 text-sm mr-auto flex items-center justify-between gap-2 text-md mb-3">
+            <p>قیمت:</p>
+            <p>
+              {persianPrice(+productValue?.price)}
+              <span className="text-[10px] px-1 py-0.5 rounded ml-1 text-primaryDark">
+                تومان
+              </span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
