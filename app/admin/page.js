@@ -33,7 +33,7 @@ export default function Admin() {
             <p>افزودن محصول</p>
           </div>
         </div>
-        <div className="w-full h-full mr-5 px-4 pb-4 pt-6 rounded-lg bg-gray-50 shadow-xl">
+        <div className="w-full h-full mr-5 p-4 rounded-lg bg-gray-50 shadow-xl">
           {loading ? (
             <div className="w-full h-full flex justify-center items-center">
               <BounceLoader color="#6b7280" />

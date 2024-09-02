@@ -7,6 +7,7 @@ export const Header = () => {
       <HeaderItems title={"پیتزا"} />
       <HeaderItems title={"ساندویچ"} />
       <HeaderItems title={"استرامبولی"} />
+      <HeaderItems title={"پیش غذا"} />
       <HeaderItems title={"نوشیدنی"} />
     </header>
   );

@@ -149,20 +149,20 @@ export default function ProductForm() {
       </form>
 
       {/* left section for show form value */}
-      <div className="flex-1 rounded border shadow p-4">
+      <div className="flex-1 flex flex-col justify-center rounded border shadow p-4">
         {file ? (
           <div className="w-[280px] h-[280px] mx-auto overflow-hidden">
             <Image
               src={URL.createObjectURL(file)}
               alt={"product image"}
-              className="w-full h-full object-cover"
+              className="w-full h-full"
               width={0}
               height={0}
             />
           </div>
         ) : (
           <div className="w-[280px] h-[280px] mx-auto overflow-hidden bg-gray-100 border rounded-lg flex items-center justify-center">
-            <CiImageOff className="w-20 h-20 text-gray-300" />
+            <CiImageOff className="w-28 h-28 text-gray-300" />
           </div>
         )}
         <div className="w-full bg-gray-100 rounded drop-shadow p-4 mt-4">
