@@ -1,4 +1,6 @@
-import { MenuItemCard } from "./MenuItemCard";
+import dynamic from "next/dynamic";
+
+const MenuItemCard = dynamic(async () => await import("./MenuItemCard"));
 
 export const MenuItem = () => {
   return (

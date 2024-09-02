@@ -5,7 +5,7 @@ import Select from "react-dropdown-select";
 import { CiImageOff } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 
-export const ProductForm = () => {
+export default function ProductForm() {
   const [productValue, setProductValue] = useState({
     category: "",
     name: "",
@@ -191,4 +191,4 @@ export const ProductForm = () => {
       </div>
     </div>
   );
-};
+}
