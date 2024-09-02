@@ -1,7 +1,6 @@
 "use client";
 import { MainSection } from "@/Components/Admin/MainSection";
-import useIsMobile from "@/utils/desktopOnly";
-// import DesktopOnly from "@/utils/DesktopOnly";
+import useIsMobile from "@/utils/useIsMobile";
 import { useEffect, useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { BounceLoader } from "react-spinners";
