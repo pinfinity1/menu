@@ -1,10 +1,26 @@
 "use client";
+import { PostCategory } from "@/api/category";
 import { useState } from "react";
 import { GoInfo } from "react-icons/go";
 import { IoIosCloseCircle } from "react-icons/io";
 
 export default function CategoryForm() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+
+  const [cateogryName, setCategoryName] = useState({
+    name: "",
+  });
+  const [submitLoading, setSubmitLoading] = useState(false);
+
+  const submitCategory = (e) => {
+    e.preventDefault();
+    setSubmitLoading(true);
+    console.log(cateogryName);
+
+    PostCategory({ ...cateogryName }).then((res) => {
+      console.log(res);
+    });
+  };
 
   return (
     <div dir="rtl" className="w-full h-full relative">
@@ -16,14 +32,19 @@ export default function CategoryForm() {
       </p>
 
       <div className="flex gap-5 w-full h-[calc(100%_-_92px)] mt-4">
-        <form className="w-1/2 flex flex-col p-4 border rounded">
+        <form
+          onSubmit={submitCategory}
+          className="w-1/2 flex flex-col p-4 border rounded"
+        >
           <div className="w-full">
             <label className="mb-2.5 block font-medium text-black mr-1">
               افزودن دسته بندی
             </label>
             <div className="relative">
               <input
-                // onChange={}
+                onChange={(e) =>
+                  setCategoryName({ ...cateogryName, name: e.target.value })
+                }
                 name="category"
                 type="text"
                 placeholder="دسته بندی"
