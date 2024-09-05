@@ -2,7 +2,10 @@
 import { PostCategory } from "@/api/category";
 import { useState } from "react";
 import { GoInfo } from "react-icons/go";
-import { IoIosCloseCircle } from "react-icons/io";
+import { Modal } from "../Modal";
+import { DeleteCategory } from "./DeleteCategory";
+import { HashLoader } from "react-spinners";
+import toast from "react-hot-toast";
 
 export default function CategoryForm() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -15,11 +18,17 @@ export default function CategoryForm() {
   const submitCategory = (e) => {
     e.preventDefault();
     setSubmitLoading(true);
-    console.log(cateogryName);
+    if (!cateogryName.name) {
+      toast.error("لطفا دسته بندی را اضافه کنید");
+      setSubmitLoading(false);
+      return;
+    }
 
     PostCategory({ ...cateogryName }).then((res) => {
-      console.log(res);
+      toast.success("موفقیت آمیز");
+      setSubmitLoading(false);
     });
+    setCategoryName({ ...cateogryName, name: "" });
   };
 
   return (
@@ -45,7 +54,8 @@ export default function CategoryForm() {
                 onChange={(e) =>
                   setCategoryName({ ...cateogryName, name: e.target.value })
                 }
-                name="category"
+                name="name"
+                value={cateogryName.name}
                 type="text"
                 placeholder="دسته بندی"
                 className="w-full text-right rounded-lg border border-stroke shadow-md px-4 py-3 text-black outline-none  "
@@ -55,11 +65,10 @@ export default function CategoryForm() {
           <div className="w-full flex justify-end mt-auto">
             <button
               type="submit"
-              // disabled={loading}
-              className="cursor-pointer shadow-md px-8 py-2 text-nowrap bg-primaryDark/50 rounded hover:bg-primaryDark/70  transition-all duration-150"
+              disabled={submitLoading}
+              className="cursor-pointer shadow-md px-8 py-2 text-nowrap bg-primaryDark/50 rounded hover:bg-primaryDark/70  transition-all duration-150 flex justify-center items-center"
             >
-              {/* {!loading ? "ثبت" : <HashLoader size={20} color="#1C2434" />} */}
-              ثبت
+              {!submitLoading ? "ثبت" : <HashLoader size={18} />}
             </button>
           </div>
         </form>
@@ -76,14 +85,9 @@ export default function CategoryForm() {
         </div>
       </div>
       {showDeleteModal && (
-        <div className="w-full h-full absolute top-0 left-0 bg-black/10 backdrop-blur rounded overflow-hidden">
-          <div className="w-full p-4">
-            <IoIosCloseCircle
-              onClick={() => setShowDeleteModal((prev) => !prev)}
-              className="w-6 h-6 mr-auto text-gray-600 hover:text-gray-900 transition-all cursor-pointer"
-            />
-          </div>
-        </div>
+        <Modal closeModal={() => setShowDeleteModal((prev) => !prev)}>
+          <DeleteCategory />
+        </Modal>
       )}
     </div>
   );

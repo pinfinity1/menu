@@ -19,7 +19,7 @@ const DesktopOnly = ({ children }) => {
 };
 
 export default function Admin() {
-  const [showForm, setShowFom] = useState("product");
+  const [showForm, setShowFom] = useState("image");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -46,6 +46,13 @@ export default function Admin() {
             >
               <FaArrowLeft className="w-3 h-3 text-gray-500 group-hover:text-gray-700 group-hover:scale-[110%]" />
               <p>افزودن محصول</p>
+            </div>
+            <div
+              onClick={() => setShowFom("image")}
+              className="group text-right bg-gray-200 px-4 py-2 mb-3 rounded-md flex items-center justify-between drop-shadow border hover:bg-gray-300 transition-all duration-100 cursor-pointer"
+            >
+              <FaArrowLeft className="w-3 h-3 text-gray-500 group-hover:text-gray-700 group-hover:scale-[110%]" />
+              <p>افزودن عکس به محصول</p>
             </div>
           </div>
           <div className="w-full h-full mr-5 p-4 rounded-lg bg-gray-50 shadow-xl">

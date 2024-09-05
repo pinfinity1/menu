@@ -4,6 +4,9 @@ const ProductForm = dynamic(async () => await import("./Product/ProductForm"));
 const CategoryForm = dynamic(
   async () => await import("./Category/CategoryForm")
 );
+const ProductImage = dynamic(
+  async () => await import("./ProductImage/ProductImage")
+);
 
 export const MainSection = ({ selectedFromMenu }) => {
   if (selectedFromMenu === "category") {
@@ -17,6 +20,13 @@ export const MainSection = ({ selectedFromMenu }) => {
     return (
       <>
         <ProductForm />
+      </>
+    );
+  }
+  if (selectedFromMenu === "image") {
+    return (
+      <>
+        <ProductImage />
       </>
     );
   }

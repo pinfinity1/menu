@@ -5,7 +5,7 @@ const GetCategory = async (eager = "false") => {
   return data;
 };
 
-const GetCategoryById = async (id = 1, eager = "false") => {
+const GetCategoryById = async (id, eager = "false") => {
   const { data } = await client.get(`category/${id}?eager=${eager}`);
   return data;
 };
@@ -15,4 +15,9 @@ const PostCategory = async (payload) => {
   return data;
 };
 
-export { GetCategory, GetCategoryById, PostCategory };
+const DeleteCategoryById = async (id) => {
+  const { data } = await client.delete(`category/${id}`);
+  return data;
+};
+
+export { GetCategory, GetCategoryById, PostCategory, DeleteCategoryById };

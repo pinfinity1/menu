@@ -3,19 +3,28 @@ import { GetCategoryById } from "@/api/category";
 import CategoryIdContext from "@/context/CategoryIdContext";
 import dynamic from "next/dynamic";
 import { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { BeatLoader } from "react-spinners";
 
 const MenuItemCard = dynamic(async () => await import("./MenuItemCard"));
 
 export const MenuItem = () => {
   const [categoryName, setCategoryName] = useState();
   const [categoryProducts, setCategoryProducts] = useState();
+  const [loading, setLoading] = useState(false);
   const { categoryId } = useContext(CategoryIdContext);
 
   useEffect(() => {
-    GetCategoryById(categoryId, true).then((res) => {
-      setCategoryName(res.name);
-      setCategoryProducts(res.products);
-    });
+    setLoading(true);
+    GetCategoryById(categoryId, true)
+      .then((res) => {
+        setCategoryName(res.name);
+        setCategoryProducts(res.products);
+        setLoading(false);
+      })
+      .catch((res) => {
+        setLoading(false);
+      });
   }, [categoryId]);
 
   return (
@@ -25,9 +34,17 @@ export const MenuItem = () => {
           {categoryName}
         </span>
       </div>
-      {categoryProducts?.map((prod) => {
-        return <MenuItemCard key={prod?.id} productDetails={prod} />;
-      })}
+      {loading ? (
+        <div className="w-full h-[400px] flex justify-center items-center">
+          <BeatLoader size={20} color="#FFF" />
+        </div>
+      ) : (
+        <>
+          {categoryProducts?.map((prod) => {
+            return <MenuItemCard key={prod?.id} productDetails={prod} />;
+          })}
+        </>
+      )}
     </div>
   );
 };

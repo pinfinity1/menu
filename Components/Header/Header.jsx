@@ -1,14 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { HeaderItems } from "./HeaderItems";
 import { GetCategory } from "@/api/category";
+import CategoryIdContext from "@/context/CategoryIdContext";
 
 export const Header = () => {
   const [category, setCategory] = useState();
+  const { setCategoryId } = useContext(CategoryIdContext);
 
   useEffect(() => {
     GetCategory().then((res) => {
       setCategory(res);
+      setCategoryId(res?.[0]?.id);
     });
   }, []);
 
