@@ -4,6 +4,8 @@ import { persianPrice } from "@/utils/persianPrice";
 import { useEffect, useState } from "react";
 import Select from "react-dropdown-select";
 import toast from "react-hot-toast";
+import { Modal } from "../Modal";
+import { DeleteProduct } from "./DeleteProduct";
 
 export default function ProductForm() {
   const [productValue, setProductValue] = useState({
@@ -12,8 +14,8 @@ export default function ProductForm() {
     price: null,
     categoryId: 0,
   });
-
   const [category, setCategory] = useState();
+  const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
 
   useEffect(() => {
     GetCategory().then((res) => {
@@ -57,7 +59,7 @@ export default function ProductForm() {
   };
 
   return (
-    <div dir="rtl" className="w-full h-full flex">
+    <div dir="rtl" className="w-full h-full flex relative">
       <form
         onSubmit={submitProductForm}
         className="w-1/2 p-4 ml-4 border rounded shadow relative text-sm"
@@ -142,7 +144,7 @@ export default function ProductForm() {
       </form>
 
       {/* left section for show form value */}
-      <div className="flex-1 flex flex-col justify-center rounded border shadow p-4">
+      <div className="flex-1 flex flex-col justify-between rounded border shadow p-4">
         <div className="w-full bg-gray-100 rounded drop-shadow p-4 mt-4">
           <div className="flex items-center gap-2 text-sm mb-5">
             <p>دسته بندی:</p>
@@ -166,7 +168,18 @@ export default function ProductForm() {
             </p>
           </div>
         </div>
+        <div
+          onClick={() => setShowDeleteProductModal((prev) => !prev)}
+          className="w-fit mr-auto bg-red-100 hover:bg-red-200 text-xs text-red-500 text-center py-2 px-3 rounded cursor-pointer"
+        >
+          برای حذف محصول کلیک کنید
+        </div>
       </div>
+      {showDeleteProductModal && (
+        <Modal closeModal={() => setShowDeleteProductModal((prev) => !prev)}>
+          <DeleteProduct />
+        </Modal>
+      )}
     </div>
   );
 }

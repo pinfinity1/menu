@@ -6,8 +6,13 @@ const PostProduct = async (payload) => {
 };
 
 const PostProductImage = async (id, payload) => {
-  const { data } = await client.post("product", payload);
+  const { data } = await client.post(`product/${id}`, payload);
   return data;
 };
 
-export { PostProduct, PostProductImage };
+const DeleteProductById = async (id) => {
+  const { data } = await client.delete(`product/${id}`);
+  return data;
+};
+
+export { PostProduct, PostProductImage, DeleteProductById };

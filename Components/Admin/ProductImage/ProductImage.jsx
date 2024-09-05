@@ -46,8 +46,6 @@ export default function ProductImage() {
       });
   };
 
-  console.log(productId);
-
   return (
     <div dir="rtl" className="w-full h-full flex">
       <div className="w-1/2 p-4 ml-4 border rounded shadow relative">

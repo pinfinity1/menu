@@ -19,7 +19,7 @@ const DesktopOnly = ({ children }) => {
 };
 
 export default function Admin() {
-  const [showForm, setShowFom] = useState("image");
+  const [showForm, setShowFom] = useState("product");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
