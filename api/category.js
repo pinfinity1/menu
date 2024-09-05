@@ -5,9 +5,14 @@ const GetCategory = async (eager = "false") => {
   return data;
 };
 
+const GetCategoryById = async (id = 1, eager = "false") => {
+  const { data } = await client.get(`category/${id}?eager=${eager}`);
+  return data;
+};
+
 const PostCategory = async (payload) => {
   const { data } = await client.post("category", payload);
   return data;
 };
 
-export { GetCategory, PostCategory };
+export { GetCategory, GetCategoryById, PostCategory };

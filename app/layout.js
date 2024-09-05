@@ -1,5 +1,6 @@
 import Head from "next/head";
 import "./globals.css";
+import { CategoryIdProvider } from "@/context/CategoryIdContext";
 
 export const metadata = {
   title: "Green FastFood",
@@ -9,7 +10,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="fa">
-      <body>{children}</body>
+      <body>
+        <CategoryIdProvider>{children}</CategoryIdProvider>
+      </body>
     </html>
   );
 }

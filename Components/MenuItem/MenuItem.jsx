@@ -1,21 +1,33 @@
+"use client";
+import { GetCategoryById } from "@/api/category";
+import CategoryIdContext from "@/context/CategoryIdContext";
 import dynamic from "next/dynamic";
+import { useContext, useEffect, useState } from "react";
 
 const MenuItemCard = dynamic(async () => await import("./MenuItemCard"));
 
 export const MenuItem = () => {
+  const [categoryName, setCategoryName] = useState();
+  const [categoryProducts, setCategoryProducts] = useState();
+  const { categoryId } = useContext(CategoryIdContext);
+
+  useEffect(() => {
+    GetCategoryById(categoryId, true).then((res) => {
+      setCategoryName(res.name);
+      setCategoryProducts(res.products);
+    });
+  }, [categoryId]);
+
   return (
     <div className="w-full bg-primaryDark backdrop-blur-xl p-3 mb-4 rounded-md">
       <div className="w-full h-0.5 mt-5 mb-8 bg-white rounded-full relative">
         <span className="absolute right-0 -top-4 bg-white mr-4 pl-4 pr-3 py-1 rounded text-primaryDark">
-          همبرگر
+          {categoryName}
         </span>
       </div>
-      <MenuItemCard />
-      <MenuItemCard />
-      <MenuItemCard />
-      <MenuItemCard />
-      <MenuItemCard />
-      <MenuItemCard />
+      {categoryProducts?.map((prod) => {
+        return <MenuItemCard key={prod?.id} productDetails={prod} />;
+      })}
     </div>
   );
 };
