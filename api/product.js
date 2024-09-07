@@ -6,7 +6,7 @@ const PostProduct = async (payload) => {
 };
 
 const PostProductImage = async (id, payload) => {
-  const { data } = await client.post(`product/${id}`, payload);
+  const { data } = await client.post(`product/images/${id}`, payload);
   return data;
 };
 

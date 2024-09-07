@@ -10,7 +10,7 @@ function MenuItemCard({ productDetails }) {
     <div dir="rtl" className="w-full flex flex-col p-2 bg-white rounded mb-3">
       <div className="w-40 h-40 rounded overflow-hidden flex items-center justify-center bg-gray-100 border">
         <Image
-          src={icon}
+          src={`http://localhost:9090/api/v1/product/images/${productDetails.id}`}
           width={0}
           height={0}
           alt="icon"
