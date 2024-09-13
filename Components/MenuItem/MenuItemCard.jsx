@@ -1,20 +1,36 @@
 import Image from "next/image";
 import icon from "../../app/icon.png";
 import { persianPrice } from "@/utils/persianPrice";
+import { useEffect, useState } from "react";
+import { GetProductImage } from "@/api/product";
 
 function MenuItemCard({ productDetails }) {
-  console.log(productDetails);
+  // console.log(productDetails);
+  const [productImage, setProductImage] = useState();
+
+  useEffect(() => {
+    GetProductImage(productDetails.id).then((res) => {
+      const blob = new Blob([res], { type: "image/jpeg" });
+      const objectURL = URL.createObjectURL(blob);
+      setProductImage(objectURL);
+      // console.log(objectURL);
+    });
+  }, []);
+
+  // console.log(productImage);
 
   const { name, price, description } = productDetails;
+
   return (
     <div dir="rtl" className="w-full flex flex-col p-2 bg-white rounded mb-3">
       <div className="w-40 h-40 rounded overflow-hidden flex items-center justify-center bg-gray-100 border">
         <Image
+          // src={productImage}
           src={`http://localhost:9090/api/v1/product/images/${productDetails.id}`}
           width={0}
           height={0}
           alt="icon"
-          className="w-12 h-12"
+          className="w-full h-full object-cover"
         />
       </div>
       <div className="w-full mt-2">

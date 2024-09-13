@@ -15,4 +15,9 @@ const DeleteProductById = async (id) => {
   return data;
 };
 
-export { PostProduct, PostProductImage, DeleteProductById };
+const GetProductImage = async (id) => {
+  const { data } = await client.get(`product/images/${id}`);
+  return data;
+};
+
+export { PostProduct, PostProductImage, DeleteProductById, GetProductImage };
