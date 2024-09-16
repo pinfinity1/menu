@@ -42,7 +42,7 @@ export const DeleteProduct = () => {
   return (
     <div className="w-full h-full">
       <div>
-        <div className="w-1/2 mb-4">
+        <div className="w-full md:w-1/2 mb-4">
           <h2 className="text-gray-700 text-right w-full font-bold pr-1 mb-2">
             دسته بندی محصول
           </h2>
@@ -64,7 +64,12 @@ export const DeleteProduct = () => {
           />
         </div>
       </div>
-      <div className="grid grid-cols-3 gap-3">
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {products?.length == 0 && (
+          <div className="w-full sm:col-span-2 md:col-span-3 h-[200px] rounded border flex justify-center items-center bg-white">
+            محصولی یافت نشد
+          </div>
+        )}
         {products?.map((prod) => {
           return (
             <div

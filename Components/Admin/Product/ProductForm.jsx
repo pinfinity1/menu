@@ -70,10 +70,10 @@ export default function ProductForm() {
   };
 
   return (
-    <div dir="rtl" className="w-full h-full flex relative">
+    <div dir="rtl" className="w-full h-full md:flex relative">
       <form
         onSubmit={submitProductForm}
-        className="w-1/2 p-4 ml-4 border rounded shadow relative text-sm"
+        className="w-full md:w-1/2 p-4 ml-4 mb-6 md:mb-0 border rounded shadow relative text-sm"
       >
         <div className="w-full mb-4">
           <h2 className="text-xs text-gray-700 text-right w-full font-bold pr-1 mb-2">
@@ -116,7 +116,7 @@ export default function ProductForm() {
         </div>
 
         {/* this is for product image */}
-        <div className="w-full mb-3">
+        <div className="w-full mb-4">
           <h2 className="text-xs text-gray-700 text-right w-full font-bold pr-1 mb-2">
             تصویر محصول
           </h2>
@@ -158,7 +158,7 @@ export default function ProductForm() {
         </div>
 
         {/* this is for product details */}
-        <div className="w-full">
+        <div className="w-full mb-4">
           <h2 className="text-xs text-gray-700 text-right w-full font-bold pr-1 mb-2">
             محتویات محصول
           </h2>
@@ -173,7 +173,7 @@ export default function ProductForm() {
         </div>
 
         {/* this is for product price */}
-        <div className="w-1/2">
+        <div className="w-1/2 mb-6">
           <label className="text-xs text-gray-700 text-right w-full font-bold pr-1">
             قمیت محصول
           </label>
@@ -189,16 +189,16 @@ export default function ProductForm() {
           </div>
         </div>
 
-        <div className="w-full p-4 absolute bottom-0 right-0">
-          <button className="w-full py-2 rounded text-nowrap bg-primaryDark/50 hover:bg-primaryDark/70  transition-all duration-150 cursor-pointer">
+        <div className="w-full md:absolute md:bottom-5 md:left-0 md:px-4">
+          <button className="w-full px-4 py-3 rounded text-nowrap bg-primaryDark/50 hover:bg-primaryDark/70  transition-all duration-150 cursor-pointer">
             ثبت
           </button>
         </div>
       </form>
 
       {/* left section for show form value */}
-      <div className="flex-1 flex flex-col justify-between rounded border shadow p-4">
-        <div className="w-full bg-gray-100 rounded drop-shadow p-3 mt-2">
+      <div className="w-full flex-1 flex flex-col justify-between rounded border shadow p-4">
+        <div className="hidden md:block w-full bg-gray-100 rounded border p-3 mb-3">
           {file ? (
             <div className="w-[280px] h-[280px] mx-auto overflow-hidden">
               <Image
@@ -222,9 +222,11 @@ export default function ProductForm() {
             <p>نام محصول:</p>
             <p>{productValue?.name}</p>
           </div>
-          <div className="flex gap-2 text-sm text-justify mb-5">
+          <div className="w-full flex gap-2 text-sm mb-5">
             <p>محتویات:</p>
-            <p>{productValue?.description}</p>
+            <p className="w-[90%] line-clamp-3 break-words">
+              {productValue?.description}
+            </p>
           </div>
           <div className="text-sm mr-auto flex items-center gap-2 text-md mb-5">
             <p>قیمت:</p>
@@ -236,13 +238,26 @@ export default function ProductForm() {
             </p>
           </div>
         </div>
-        <div
-          onClick={() => setShowDeleteProductModal((prev) => !prev)}
-          className="w-fit mr-auto bg-red-100 hover:bg-red-200 text-xs text-red-500 text-center py-2 px-3 rounded cursor-pointer"
-        >
-          برای حذف محصول کلیک کنید
+        <div className="flex justify-between items-center text-xs xl:text-base border rounded px-4 py-2 mb-2">
+          <p>برای ویرایش دسته بندی کلیک کنید</p>
+          <div
+            onClick={() => setShowEditModal((prev) => !prev)}
+            className="px-4 py-2 rounded bg-yellow-50 border border-yellow-500 hover:bg-yellow-100 text-yellow-600 cursor-pointer text-xs"
+          >
+            ویرایش
+          </div>
+        </div>
+        <div className="flex justify-between items-center text-xs xl:text-base border rounded px-4 py-2">
+          <p>برای حذف محصول کلیک کنید</p>
+          <div
+            onClick={() => setShowDeleteProductModal((prev) => !prev)}
+            className="px-4 py-2 rounded bg-red-50 border border-red-500 hover:bg-red-100 text-red-500 cursor-pointer text-xs"
+          >
+            حذف
+          </div>
         </div>
       </div>
+
       {showDeleteProductModal && (
         <Modal closeModal={() => setShowDeleteProductModal((prev) => !prev)}>
           <DeleteProduct />

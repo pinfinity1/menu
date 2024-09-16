@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 
 export default function CategoryForm() {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState();
 
   const [cateogryName, setCategoryName] = useState({
     name: "",
@@ -24,28 +25,33 @@ export default function CategoryForm() {
       return;
     }
 
-    PostCategory({ ...cateogryName }).then((res) => {
-      toast.success("موفقیت آمیز");
-      setSubmitLoading(false);
-    });
+    PostCategory({ ...cateogryName })
+      .then((res) => {
+        toast.success("موفقیت آمیز");
+        setSubmitLoading(false);
+      })
+      .catch((er) => {
+        toast.error("لطفا مجددا تلاش فرمایید");
+        setSubmitLoading(false);
+      });
     setCategoryName({ ...cateogryName, name: "" });
   };
 
   return (
     <div dir="rtl" className="w-full h-full relative">
-      <p className="text-right text-sm flex items-center bg-primary/20 text-primaryDark p-4 rounded">
-        <GoInfo className="w-8 h-8 ml-6" />
+      <p className="text-right text-xs xl:text-sm flex bg-primary/20 text-primaryDark p-4 rounded">
+        <GoInfo className="w-10 mt-1 ml-2" />
         اگر میخواهید دسته بندی جدیدی از محصولات را وارد کنید لطفا ابتدا دسته
         بندی را اینجا ثبت کرده و سپس به افزودن محصول بروید و محصولات مرتبط با
         این زیرمجموعه را وارد کنید
       </p>
 
-      <div className="flex gap-5 w-full h-[calc(100%_-_92px)] mt-4">
+      <div className="flex flex-col md:flex-row gap-5 w-full h-[calc(100%_-_92px)] mt-4">
         <form
           onSubmit={submitCategory}
-          className="w-1/2 flex flex-col p-4 border rounded"
+          className="w-full md:w-1/2 flex flex-col p-4 border rounded"
         >
-          <div className="w-full">
+          <div className="w-full mb-8 text-sm md:text-base">
             <label className="mb-2.5 block font-medium text-black mr-1">
               افزودن دسته بندی
             </label>
@@ -58,7 +64,7 @@ export default function CategoryForm() {
                 value={cateogryName.name}
                 type="text"
                 placeholder="دسته بندی"
-                className="w-full text-right rounded-lg border border-stroke shadow-md px-4 py-3 text-black outline-none  "
+                className="w-full text-right rounded-lg border border-stroke shadow-md px-3 py-2 xl:px-4 xl:py-3 text-black outline-none  "
               />
             </div>
           </div>
@@ -66,18 +72,27 @@ export default function CategoryForm() {
             <button
               type="submit"
               disabled={submitLoading}
-              className="cursor-pointer shadow-md px-8 py-2 text-nowrap bg-primaryDark/50 rounded hover:bg-primaryDark/70  transition-all duration-150 flex justify-center items-center"
+              className="cursor-pointer text-sm xl:text-base shadow-md px-8 py-2 text-nowrap bg-primaryDark/50 rounded hover:bg-primaryDark/70  transition-all duration-150 flex justify-center items-center"
             >
-              {!submitLoading ? "ثبت" : <HashLoader size={18} />}
+              {!submitLoading ? "ثبت" : <HashLoader />}
             </button>
           </div>
         </form>
-        <div className="flex-1 h-fit px-4 py-2 border rounded">
-          <div className="flex justify-between items-center">
+        <div className="flex-1 h-fit">
+          <div className="flex justify-between items-center text-xs xl:text-base border rounded px-4 py-2 mb-2">
+            <p>برای ویرایش دسته بندی کلیک کنید</p>
+            <div
+              onClick={() => setShowEditModal((prev) => !prev)}
+              className="px-4 py-2 rounded bg-yellow-50 border border-yellow-500 hover:bg-yellow-100 text-yellow-600 cursor-pointer text-xs"
+            >
+              ویرایش
+            </div>
+          </div>
+          <div className="flex justify-between items-center text-xs xl:text-base border rounded px-4 py-2">
             <p>برای حذف دسته بندی کلیک کنید</p>
             <div
               onClick={() => setShowDeleteModal((prev) => !prev)}
-              className="px-4 py-2 rounded bg-red-50 hover:bg-red-100 text-red-500 cursor-pointer text-sm"
+              className="px-4 py-2 rounded bg-red-50 border border-red-500 hover:bg-red-100 text-red-500 cursor-pointer text-xs"
             >
               حذف
             </div>

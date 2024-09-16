@@ -21,6 +21,7 @@ const DesktopOnly = ({ children }) => {
 export default function Admin() {
   const [showForm, setShowFom] = useState("product");
   const [loading, setLoading] = useState(false);
+  const [showFormDropDown, setShowFormDropDown] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -29,45 +30,36 @@ export default function Admin() {
   }, [showForm]);
 
   return (
-    <DesktopOnly>
-      <main className="w-full h-screen max-h-screen bg-primaryDark/30 font-picoopic px-4">
-        <div className="h-full flex flex-row-reverse py-16">
-          <div className="w-1/3 h-fit max-h-full px-4 pb-4 pt-6 bg-gray-50 rounded-lg shadow-xl">
-            <div
-              onClick={() => setShowFom("category")}
-              className="group text-right bg-gray-200 px-4 py-2 mb-3 rounded-md flex items-center justify-between drop-shadow border hover:bg-gray-300 transition-all duration-100 cursor-pointer"
-            >
-              <FaArrowLeft className="w-3 h-3 text-gray-500 group-hover:text-gray-700 group-hover:scale-[110%]" />
-              <p>افزودن دسته‌بندی</p>
-            </div>
-            <div
-              onClick={() => setShowFom("product")}
-              className="group text-right bg-gray-200 px-4 py-2 mb-3 rounded-md flex items-center justify-between drop-shadow border hover:bg-gray-300 transition-all duration-100 cursor-pointer"
-            >
-              <FaArrowLeft className="w-3 h-3 text-gray-500 group-hover:text-gray-700 group-hover:scale-[110%]" />
-              <p>افزودن محصول</p>
-            </div>
-            {/* <div
-              onClick={() => setShowFom("image")}
-              className="group text-right bg-gray-200 px-4 py-2 mb-3 rounded-md flex items-center justify-between drop-shadow border hover:bg-gray-300 transition-all duration-100 cursor-pointer"
-            >
-              <FaArrowLeft className="w-3 h-3 text-gray-500 group-hover:text-gray-700 group-hover:scale-[110%]" />
-              <p>افزودن عکس به محصول</p>
-            </div> */}
+    <main className="w-full min-h-screen  bg-primaryDark/30 px-4">
+      <div className="w-full h-full xl:flex xl:flex-row-reverse py-3 md:py-16">
+        <div className="w-full h-fit flex flex-row-reverse xl:flex-col gap-4 xl:w-1/3 xl:h-fit xl:max-h-full px-2 py-2 xl:p-4 mb-4 bg-gray-50 rounded-lg shadow overflow-x-auto scrollbar-hide">
+          <div
+            onClick={() => setShowFom("category")}
+            className="group whitespace-nowrap text-right text-sm xl:text-base bg-gray-200 px-4 py-2 rounded-md flex items-center justify-between gap-2 drop-shadow border hover:bg-gray-300 transition-all duration-100 cursor-pointer"
+          >
+            <FaArrowLeft className="w-3 h-3 mt-0.5 text-gray-500 group-hover:text-gray-700 group-hover:scale-[110%]" />
+            <p>دسته‌بندی</p>
           </div>
-          <div className="w-full h-full mr-5 p-4 rounded-lg bg-gray-50 shadow-xl">
-            {loading ? (
-              <div className="w-full h-full flex justify-center items-center">
-                <BounceLoader color="#6b7280" />
-              </div>
-            ) : (
-              <>
-                <MainSection selectedFromMenu={showForm} />
-              </>
-            )}
+          <div
+            onClick={() => setShowFom("product")}
+            className="group whitespace-nowrap text-right text-sm xl:text-base bg-gray-200 px-4 py-2 rounded-md flex items-center justify-between gap-2 drop-shadow border hover:bg-gray-300 transition-all duration-100 cursor-pointer"
+          >
+            <FaArrowLeft className="w-3 h-3 mt-0.5 text-gray-500 group-hover:text-gray-700 group-hover:scale-[110%]" />
+            <p>محصول</p>
           </div>
         </div>
-      </main>
-    </DesktopOnly>
+        <div className="w-full h-full mr-5 p-4 rounded-lg bg-gray-50 shadow-xl">
+          {loading ? (
+            <div className="w-full h-[400px] flex justify-center items-center">
+              <BounceLoader color="#6b7280" />
+            </div>
+          ) : (
+            <>
+              <MainSection selectedFromMenu={showForm} />
+            </>
+          )}
+        </div>
+      </div>
+    </main>
   );
 }
