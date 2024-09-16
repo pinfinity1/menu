@@ -30,12 +30,14 @@ export const DeleteCategory = () => {
         return (
           <div
             key={item.id}
-            className="bg-white col-span-1 p-3  border rounded flex items-center justify-between text-sm"
+            className="line-clamp-1 bg-white col-span-1 p-3  border rounded flex items-center justify-between text-sm"
           >
-            {item.name}
+            <p className="w-[calc(100%_-_34px)] line-clamp-1 text-right">
+              {item.name}
+            </p>
             <span
               onClick={() => handleDeleteCategory(item.id)}
-              className="p-2 rounded bg-red-50 hover:bg-red-100 text-xs text-red-500 cursor-pointer border border-red-200"
+              className="w-34 p-2 rounded bg-red-50 hover:bg-red-100 text-xs text-red-500 cursor-pointer border border-red-200"
             >
               حذف
             </span>

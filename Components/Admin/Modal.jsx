@@ -9,7 +9,7 @@ export const Modal = ({ children, closeModal }) => {
           className="w-6 h-6 mr-auto text-gray-600 hover:text-gray-900 transition-all cursor-pointer"
         />
       </div>
-      <div className="w-full h-full p-4">{children}</div>
+      <div className="w-full h-full p-4 overflow-x-auto">{children}</div>
     </div>
   );
 };

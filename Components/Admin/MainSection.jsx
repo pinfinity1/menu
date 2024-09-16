@@ -23,11 +23,4 @@ export const MainSection = ({ selectedFromMenu }) => {
       </>
     );
   }
-  // if (selectedFromMenu === "image") {
-  //   return (
-  //     <>
-  //       <ProductImage />
-  //     </>
-  //   );
-  // }
 };

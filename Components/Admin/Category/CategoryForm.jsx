@@ -38,7 +38,7 @@ export default function CategoryForm() {
   };
 
   return (
-    <div dir="rtl" className="w-full h-full relative">
+    <div dir="rtl" className="w-full min-h-[500px] relative">
       <p className="text-right text-xs xl:text-sm flex bg-primary/20 text-primaryDark p-4 rounded">
         <GoInfo className="w-10 mt-1 ml-2" />
         اگر میخواهید دسته بندی جدیدی از محصولات را وارد کنید لطفا ابتدا دسته
@@ -49,7 +49,7 @@ export default function CategoryForm() {
       <div className="flex flex-col md:flex-row gap-5 w-full h-[calc(100%_-_92px)] mt-4">
         <form
           onSubmit={submitCategory}
-          className="w-full md:w-1/2 flex flex-col p-4 border rounded"
+          className="w-full h-full md:w-1/2 flex flex-col p-4 border rounded"
         >
           <div className="w-full mb-8 text-sm md:text-base">
             <label className="mb-2.5 block font-medium text-black mr-1">
@@ -74,7 +74,7 @@ export default function CategoryForm() {
               disabled={submitLoading}
               className="cursor-pointer text-sm xl:text-base shadow-md px-8 py-2 text-nowrap bg-primaryDark/50 rounded hover:bg-primaryDark/70  transition-all duration-150 flex justify-center items-center"
             >
-              {!submitLoading ? "ثبت" : <HashLoader />}
+              {!submitLoading ? "ثبت" : <HashLoader size={14} />}
             </button>
           </div>
         </form>
