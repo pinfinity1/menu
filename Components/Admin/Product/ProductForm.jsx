@@ -9,6 +9,7 @@ import { DeleteProduct } from "./DeleteProduct";
 import { FaPlus } from "react-icons/fa";
 import Image from "next/image";
 import { CiImageOff } from "react-icons/ci";
+import { PostProductImage } from "@/api/product";
 
 export default function ProductForm() {
   const [productValue, setProductValue] = useState({
@@ -43,30 +44,51 @@ export default function ProductForm() {
     (item) => productValue.categoryId === item.id
   );
 
+  const setProductValueEmpty= (e) =>{
+    setProductValue({
+      name: "",
+      description: "",
+      price: null,
+      categoryId: 0,
+    })
+    removeImage(e);
+
+  }
+
   const submitProductForm = (e) => {
     e.preventDefault();
     if (
-      !productValue.name ||
-      !productValue.description ||
-      !productValue.categoryId ||
-      !productValue.price
+        !productValue.name ||
+        !productValue.description ||
+        !productValue.categoryId ||
+        !productValue.price
     ) {
       toast.error("لطفا فیلد های مربوط را کامل نمایید");
       return;
     }
-    PostProduct({ ...productValue })
-      .then((res) => {
-        toast.success("موفقیت آمیز");
-        setProductValue({
-          name: "",
-          description: "",
-          price: null,
-          categoryId: 0,
+    PostProduct({...productValue})
+        .then((res) => {
+          if (file) {
+            const formData = new FormData();
+            formData.append("image", file);
+            PostProductImage(res.id, formData).then((res) => {
+              toast.success("موفقیت آمیز");
+              setProductValueEmpty(e);
+            }).catch((er) => {
+              console.log("Image Error : " + er);
+              toast.success("موفقیت آمیز اما عکس محصول ارسال نشد .");
+              setProductValueEmpty(e);
+            })
+          }
+          else{
+          toast.success("موفقیت آمیز اما عکس محصول ارسال نشد .");
+            setProductValueEmpty(e);
+          }
+        })
+        .catch((er) => {
+          console.log("Product Error : " + er);
+          toast.error("لطفا مجددا تلاش فرمایید");
         });
-      })
-      .catch((er) => {
-        toast.error("لطفا مجددا تلاش فرمایید");
-      });
   };
 
   return (
