@@ -26,6 +26,7 @@ function MenuItemCard({ productDetails }) {
       <div className="w-40 h-40 rounded overflow-hidden flex items-center justify-center bg-gray-100 border">
         <Image
           // src={productImage}
+          priority
           src={`${process.env.NEXT_PUBLIC_API_URL}product/images/${productDetails.id}`}
           width={0}
           height={0}

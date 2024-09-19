@@ -5,6 +5,11 @@ const PostProduct = async (payload) => {
   return data;
 };
 
+const UpdateProduct = async (id, payload) => {
+  const { data } = await client.put(`product/${id}`, payload);
+  return data;
+};
+
 const PostProductImage = async (id, payload) => {
   const { data } = await client.post(`product/images/${id}`, payload);
   return data;
@@ -20,4 +25,10 @@ const GetProductImage = async (id) => {
   return data;
 };
 
-export { PostProduct, PostProductImage, DeleteProductById, GetProductImage };
+export {
+  PostProduct,
+  UpdateProduct,
+  PostProductImage,
+  DeleteProductById,
+  GetProductImage,
+};

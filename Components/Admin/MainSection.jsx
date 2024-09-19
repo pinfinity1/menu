@@ -1,26 +1,11 @@
-import dynamic from "next/dynamic";
-
-const ProductForm = dynamic(async () => await import("./Product/ProductForm"));
-const CategoryForm = dynamic(
-  async () => await import("./Category/CategoryForm")
-);
-const ProductImage = dynamic(
-  async () => await import("./ProductImage/ProductImage")
-);
+import CategoryForm from "./Category/CategoryForm";
+import ProductForm from "./Product/ProductForm";
 
 export const MainSection = ({ selectedFromMenu }) => {
   if (selectedFromMenu === "category") {
-    return (
-      <>
-        <CategoryForm />
-      </>
-    );
+    return <CategoryForm />;
   }
   if (selectedFromMenu === "product") {
-    return (
-      <>
-        <ProductForm />
-      </>
-    );
+    return <ProductForm />;
   }
 };
