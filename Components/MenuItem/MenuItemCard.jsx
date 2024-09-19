@@ -5,19 +5,15 @@ import { useEffect, useState } from "react";
 import { GetProductImage } from "@/api/product";
 
 function MenuItemCard({ productDetails }) {
-  // console.log(productDetails);
-  const [productImage, setProductImage] = useState();
+  const [productImage, setProductImage] = useState(
+    `${process.env.NEXT_PUBLIC_API_URL}product/images/${productDetails.id}`
+  );
+  const [imgSize, setImgSize] = useState({ width: 160, height: 160 });
 
-  useEffect(() => {
-    GetProductImage(productDetails.id).then((res) => {
-      const blob = new Blob([res], { type: "image/jpeg" });
-      const objectURL = URL.createObjectURL(blob);
-      setProductImage(objectURL);
-      // console.log(objectURL);
-    });
-  }, []);
-
-  // console.log(productImage);
+  const handleError = () => {
+    setProductImage(icon);
+    setImgSize({ width: 80, height: 80 });
+  };
 
   const { name, price, description } = productDetails;
 
@@ -25,13 +21,12 @@ function MenuItemCard({ productDetails }) {
     <div dir="rtl" className="w-full flex flex-col p-2 bg-white rounded mb-3">
       <div className="w-40 h-40 rounded overflow-hidden flex items-center justify-center bg-gray-100 border">
         <Image
-          // src={productImage}
           priority
-          src={`${process.env.NEXT_PUBLIC_API_URL}product/images/${productDetails.id}`}
-          width={0}
-          height={0}
+          src={productImage}
+          onError={handleError}
+          width={imgSize.width}
+          height={imgSize.height}
           alt="icon"
-          className="w-full h-full object-cover"
         />
       </div>
       <div className="w-full mt-2">
@@ -41,10 +36,10 @@ function MenuItemCard({ productDetails }) {
           <p>{description}</p>
         </div>
         <p className="text-left flex items-center justify-end">
+          {persianPrice(price)}
           <span className="text-[10px] px-1 py-0.5 rounded ml-1 text-primaryDark">
             تومان
           </span>
-          {persianPrice(price)}
         </p>
       </div>
     </div>

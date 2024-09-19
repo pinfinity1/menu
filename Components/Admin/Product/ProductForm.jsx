@@ -17,7 +17,6 @@ export default function ProductForm() {
     categoryId: 0,
   });
   const [category, setCategory] = useState();
-  const [showDeleteProductModal, setShowDeleteProductModal] = useState(false);
   const [file, setFile] = useState();
 
   const saveImage = (e) => {
@@ -38,10 +37,6 @@ export default function ProductForm() {
     setProductValue({ ...productValue, [e.target.name]: e.target.value });
   };
 
-  const categoryName = category?.filter(
-    (item) => productValue.categoryId === item.id
-  );
-
   const setProductValueEmpty = (e) => {
     setProductValue({
       name: "",
@@ -52,8 +47,7 @@ export default function ProductForm() {
     removeImage(e);
   };
 
-  const submitProductForm = (e) => {
-    e.preventDefault();
+  const submitProductForm = () => {
     if (
       !productValue.name ||
       !productValue.description ||

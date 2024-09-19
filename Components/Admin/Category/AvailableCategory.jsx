@@ -7,7 +7,7 @@ import { Modal } from "../Modal";
 import { EditCategory } from "./EditCategory";
 
 export const AvailableCategory = () => {
-  const [category, setCategory] = useState();
+  const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showEditModal, setShowEditModal] = useState(false);
   const [modalCategoryDetail, setModalCategoryDetail] = useState();
@@ -36,34 +36,42 @@ export const AvailableCategory = () => {
             <PropagateLoader size={15} />
           </div>
         ) : (
-          <div className="w-full">
-            {category.map((cat) => {
-              const handleClickOnEdit = (data) => {
-                setShowEditModal((prev) => !prev);
-                setModalCategoryDetail(data);
-              };
+          <>
+            {category.length == 0 ? (
+              <div className="w-full h-[240px] flex justify-center items-center bg-primaryDark/10 rounded-lg">
+                <p>دسته‌بندی وجود ندارد</p>
+              </div>
+            ) : (
+              <div className="w-full">
+                {category.map((cat) => {
+                  const handleClickOnEdit = (data) => {
+                    setShowEditModal((prev) => !prev);
+                    setModalCategoryDetail(data);
+                  };
 
-              return (
-                <div
-                  key={cat.id}
-                  className="w-full px-3 py-3 mb-2 flex flex-row-reverse items-center justify-between border rounded-lg bg-primaryDark/5"
-                >
-                  {cat.name}
-                  <span
-                    onClick={() => handleClickOnEdit(cat)}
-                    className="cursor-pointer"
-                  >
-                    <FiEdit className="text-[18px]" />
-                  </span>
-                </div>
-              );
-            })}
-            {showEditModal && (
-              <Modal closeModal={() => setShowEditModal((prev) => !prev)}>
-                <EditCategory categoryDetail={modalCategoryDetail} />
-              </Modal>
+                  return (
+                    <div
+                      key={cat.id}
+                      className="w-full px-3 py-3 mb-2 flex flex-row-reverse items-center justify-between border rounded-lg bg-primaryDark/5"
+                    >
+                      {cat.name}
+                      <span
+                        onClick={() => handleClickOnEdit(cat)}
+                        className="cursor-pointer"
+                      >
+                        <FiEdit className="text-[18px]" />
+                      </span>
+                    </div>
+                  );
+                })}
+                {showEditModal && (
+                  <Modal closeModal={() => setShowEditModal((prev) => !prev)}>
+                    <EditCategory categoryDetail={modalCategoryDetail} />
+                  </Modal>
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </>
