@@ -176,7 +176,7 @@ export default function ProductForm() {
                 <input
                   type="file"
                   id="upload"
-                  accept="image/*"
+                  accept=".jpg,.jpeg,.png"
                   className="hidden"
                   onChange={saveImage}
                 />
