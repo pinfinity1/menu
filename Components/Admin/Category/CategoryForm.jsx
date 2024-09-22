@@ -2,20 +2,18 @@
 import { PostCategory } from "@/api/category";
 import { useState } from "react";
 import { GoInfo } from "react-icons/go";
-import { HashLoader } from "react-spinners";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
-export default function CategoryForm() {
+export default function CategoryForm({ reFetch }) {
   const [cateogryName, setCategoryName] = useState({
     name: "",
   });
   const [submitLoading, setSubmitLoading] = useState(false);
 
-  const router = useRouter();
-
   const submitCategory = (e) => {
+    e.preventDefault();
     setSubmitLoading(true);
+
     if (!cateogryName.name) {
       toast.error("لطفا دسته بندی را اضافه کنید");
       setSubmitLoading(false);
@@ -25,6 +23,7 @@ export default function CategoryForm() {
     PostCategory({ ...cateogryName })
       .then((res) => {
         toast.success("موفقیت آمیز");
+        reFetch();
         setSubmitLoading(false);
       })
       .catch((er) => {
@@ -76,7 +75,7 @@ export default function CategoryForm() {
               disabled={submitLoading}
               className="cursor-pointer h-[36px] w-[120px] text-sm xl:text-base shadow-md px-8 py-2 text-nowrap bg-primaryDark/50 rounded hover:bg-primaryDark/70  transition-all duration-150 flex justify-center items-center"
             >
-              {!submitLoading ? "ثبت" : <HashLoader size={14} />}
+              {`ثبت `}
             </button>
           </div>
         </form>

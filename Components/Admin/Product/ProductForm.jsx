@@ -47,7 +47,8 @@ export default function ProductForm() {
     removeImage(e);
   };
 
-  const submitProductForm = () => {
+  const submitProductForm = (e) => {
+    e.preventDefault();
     if (
       !productValue.name ||
       !productValue.description ||

@@ -1,4 +1,3 @@
-import Head from "next/head";
 import "./globals.css";
 import { CategoryIdProvider } from "@/context/CategoryIdContext";
 import { Toaster } from "react-hot-toast";

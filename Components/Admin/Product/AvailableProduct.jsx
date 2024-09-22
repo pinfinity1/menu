@@ -34,7 +34,7 @@ export const AvailableProduct = () => {
   }, [categoryId]);
 
   return (
-    <div className="w-full pt-4 pb-2">
+    <div className="w-full py-4">
       <div className="relative w-full h-[2px] bg-primaryDark rounded-full mt-4 mb-8">
         <span className="bg-white text-sm px-4 absolute right-3 -top-3">
           محصولات
