@@ -9,7 +9,7 @@ import { FaPlus } from "react-icons/fa";
 import Image from "next/image";
 import { PostProductImage } from "@/api/product";
 
-export default function ProductForm() {
+export default function ProductForm({ reFetchCategory, reFetchProducts }) {
   const [productValue, setProductValue] = useState({
     name: "",
     description: "",
@@ -42,7 +42,6 @@ export default function ProductForm() {
       name: "",
       description: "",
       price: null,
-      categoryId: 0,
     });
     removeImage(e);
   };
@@ -72,6 +71,10 @@ export default function ProductForm() {
               console.log("Image Error : " + er);
               toast.success("موفقیت آمیز اما عکس محصول ارسال نشد .");
               setProductValueEmpty(e);
+            })
+            .finally(() => {
+              reFetchCategory();
+              reFetchProducts();
             });
         } else {
           toast.success("موفقیت آمیز اما عکس محصول ارسال نشد .");
@@ -81,6 +84,10 @@ export default function ProductForm() {
       .catch((er) => {
         console.log("Product Error : " + er);
         toast.error("لطفا مجددا تلاش فرمایید");
+      })
+      .finally(() => {
+        reFetchCategory();
+        reFetchProducts();
       });
   };
 
@@ -113,6 +120,7 @@ export default function ProductForm() {
             valueField="id"
             required
             searchable={false}
+            onClearAll={() => console.log(1)}
             onChange={(value) =>
               setProductValue({ ...productValue, categoryId: value[0]?.id })
             }

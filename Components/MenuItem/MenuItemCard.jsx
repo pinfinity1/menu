@@ -1,8 +1,8 @@
 import Image from "next/image";
 import icon from "../../app/icon.png";
 import { persianPrice } from "@/utils/persianPrice";
-import { useEffect, useState } from "react";
-import { GetProductImage } from "@/api/product";
+import { useState } from "react";
+import { CiImageOn } from "react-icons/ci";
 
 function MenuItemCard({ productDetails }) {
   const [productImage, setProductImage] = useState(

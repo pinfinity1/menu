@@ -5,33 +5,31 @@ import Select from "react-dropdown-select";
 import { FiEdit } from "react-icons/fi";
 import { Modal } from "../Modal";
 import { EditProduct } from "./EditProduct";
+import { SyncLoader } from "react-spinners";
+import { AiOutlineDelete } from "react-icons/ai";
+import { DeleteProductById } from "@/api/product";
+import toast from "react-hot-toast";
 
-export const AvailableProduct = () => {
-  const [category, setCategory] = useState();
-  const [categoryId, setCategoryId] = useState();
-  const [products, setProducts] = useState([]);
+export const AvailableProduct = ({
+  category,
+  products,
+  reFetchCategory,
+  reFetchProducts,
+}) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [modalProductDetail, setModalProductDetail] = useState();
+  const [categoryId, setCategoryId] = useState();
 
-  useEffect(() => {
-    GetCategory()
-      .then((res) => {
-        setCategory(res);
-      })
-      .catch((er) => {
-        toast.error("محصولی یافت نشد");
-      });
-  }, []);
-
-  useEffect(() => {
-    GetCategoryById(categoryId, true)
-      .then((res) => {
-        setProducts(res.products);
-      })
+  const submitDeleteProduct = async (id) => {
+    await DeleteProductById(id)
+      .then((res) => toast.success("با موفقیت حذف شد"))
       .catch((er) => {
         console.log(er);
+        toast("مجدد");
       });
-  }, [categoryId]);
+    await reFetchCategory();
+    await reFetchProducts(categoryId);
+  };
 
   return (
     <div className="w-full py-4">
@@ -58,7 +56,10 @@ export const AvailableProduct = () => {
           valueField="id"
           required
           searchable={false}
-          onChange={(value) => setCategoryId(value[0]?.id)}
+          onChange={(value) => {
+            setCategoryId(value[0]?.id);
+            reFetchProducts(value[0]?.id);
+          }}
         />
       </div>
       {!categoryId ? (
@@ -84,18 +85,32 @@ export const AvailableProduct = () => {
                     className="w-full px-3 py-3 mb-2 flex flex-row-reverse items-center justify-between border rounded-lg bg-primaryDark/5"
                   >
                     <p>{prod.name}</p>
-                    <span
-                      onClick={() => handleClickOnEdit(prod)}
-                      className="cursor-pointer"
-                    >
-                      <FiEdit className="text-[18px]" />
-                    </span>
+                    <div className="w-fit flex items-center gap-5">
+                      <span
+                        onClick={() => handleClickOnEdit(prod)}
+                        className="cursor-pointer"
+                      >
+                        <FiEdit className="text-[18px] hover:text-primaryDark" />
+                      </span>
+                      <span
+                        onClick={() => {
+                          submitDeleteProduct(prod.id);
+                        }}
+                      >
+                        <AiOutlineDelete className="text-[22px] hover:fill-red-400 cursor-pointer" />
+                      </span>
+                    </div>
                   </div>
                 );
               })}
               {showEditModal && (
                 <Modal closeModal={() => setShowEditModal((prev) => !prev)}>
-                  <EditProduct productDetail={modalProductDetail} />
+                  <EditProduct
+                    productDetail={modalProductDetail}
+                    closeModal={() => setShowEditModal((prev) => !prev)}
+                    reFetchCategory={reFetchCategory}
+                    reFetchProducts={reFetchProducts}
+                  />
                 </Modal>
               )}
             </div>

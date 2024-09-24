@@ -1,17 +1,13 @@
-import { DeleteCategoryById, UpdateCategory } from "@/api/category";
+import { UpdateCategory } from "@/api/category";
 import { useState } from "react";
 
-export const EditCategory = ({ categoryDetail }) => {
+export const EditCategory = ({ categoryDetail, closeModal, reFetch }) => {
   const [editedCategory, setEditedCategory] = useState({ ...categoryDetail });
 
-  const submitEditCategory = () => {
-    UpdateCategory(editedCategory.id, { ...editedCategory });
-  };
-
-  const submitDeleteCategory = () => {
-    DeleteCategoryById(editedCategory.id);
-
-    window.location.reload();
+  const submitEditCategory = async () => {
+    await UpdateCategory(editedCategory.id, { ...editedCategory });
+    await reFetch();
+    await closeModal();
   };
 
   return (
@@ -48,17 +44,6 @@ export const EditCategory = ({ categoryDetail }) => {
             </button>
           </div>
         </form>
-      </div>
-      <div className="pt-10">
-        <div className="w-full bg-white p-2 border rounded-lg flex items-center justify-between text-xs">
-          <span
-            onClick={submitDeleteCategory}
-            className="p-2 rounded-[6px] bg-red-50 hover:bg-red-100 text-red-500 cursor-pointer border border-red-200"
-          >
-            حذف
-          </span>
-          <p>آیا میخواهید این دسته بندی را حذف کنید؟</p>
-        </div>
       </div>
     </div>
   );

@@ -1,14 +1,27 @@
 "use client";
-import { GetCategory } from "@/api/category";
-import { useContext, useEffect, useState } from "react";
-import { PropagateLoader, PuffLoader } from "react-spinners";
+import { useState } from "react";
+import { PropagateLoader } from "react-spinners";
 import { FiEdit } from "react-icons/fi";
 import { Modal } from "../Modal";
 import { EditCategory } from "./EditCategory";
+import { AiOutlineDelete } from "react-icons/ai";
+import { DeleteCategoryById } from "@/api/category";
+import toast from "react-hot-toast";
 
-export const AvailableCategory = ({ categoryList, Loading }) => {
+export const AvailableCategory = ({ categoryList, Loading, reFetch }) => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [modalCategoryDetail, setModalCategoryDetail] = useState();
+
+  const submitDeleteCategory = async (id) => {
+    await DeleteCategoryById(id)
+      .then((res) => {
+        toast.success("حذف موفقیت‌آمیز");
+      })
+      .catch((er) => {
+        toast.error("مجدد");
+      });
+    await reFetch();
+  };
 
   return (
     <>
@@ -42,18 +55,31 @@ export const AvailableCategory = ({ categoryList, Loading }) => {
                       className="w-full px-3 py-3 mb-2 flex flex-row-reverse items-center justify-between border rounded-lg bg-primaryDark/5"
                     >
                       {cat.name}
-                      <span
-                        onClick={() => handleClickOnEdit(cat)}
-                        className="cursor-pointer"
-                      >
-                        <FiEdit className="text-[18px]" />
-                      </span>
+                      <div className="w-fit flex items-center gap-5">
+                        <span
+                          onClick={() => handleClickOnEdit(cat)}
+                          className="cursor-pointer"
+                        >
+                          <FiEdit className="text-[18px] hover:text-primaryDark" />
+                        </span>
+                        <span
+                          onClick={() => {
+                            submitDeleteCategory(cat.id);
+                          }}
+                        >
+                          <AiOutlineDelete className="text-[22px] hover:fill-red-400 cursor-pointer" />
+                        </span>
+                      </div>
                     </div>
                   );
                 })}
                 {showEditModal && (
                   <Modal closeModal={() => setShowEditModal((prev) => !prev)}>
-                    <EditCategory categoryDetail={modalCategoryDetail} />
+                    <EditCategory
+                      categoryDetail={modalCategoryDetail}
+                      reFetch={reFetch}
+                      closeModal={() => setShowEditModal((prev) => !prev)}
+                    />
                   </Modal>
                 )}
               </div>

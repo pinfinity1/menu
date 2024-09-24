@@ -1,37 +1,40 @@
-import {
-  DeleteProductById,
-  PostProductImage,
-  UpdateProduct,
-} from "@/api/product";
+import { PostProductImage, UpdateProduct } from "@/api/product";
 import { persianPrice } from "@/utils/persianPrice";
 import Image from "next/image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { FaPlus } from "react-icons/fa";
 
-export const EditProduct = ({ productDetail }) => {
+export const EditProduct = ({
+  productDetail,
+  reFetchCategory,
+  reFetchProducts,
+  closeModal,
+}) => {
   const [editedProduct, setEditedProduct] = useState({
     name: productDetail.name,
     description: productDetail.description,
     price: productDetail.price,
     categoryId: productDetail.categoryId,
   });
-  const [productImage, setProductImage] = useState(
+
+  const [productEditImage, setProductEditImage] = useState(
     `${process.env.NEXT_PUBLIC_API_URL}product/images/${productDetail.id}`
   );
   const [selectedImage, setSelectedImage] = useState(null);
   const [imgFile, setImgFile] = useState();
 
-  const submitEditProduct = () => {
-    UpdateProduct(productDetail.id, { ...editedProduct });
-  };
-
-  const submitDeleteProduct = () => {
-    DeleteProductById(productDetail.id)
-      .then((res) => toast.success("با موفقیت حذف شد"))
-      .catch((er) => toast("مجدد"));
-
-    window.location.reload();
+  const submitEditProduct = async (e) => {
+    e.preventDefault();
+    await UpdateProduct(productDetail.id, { ...editedProduct })
+      .then((res) => {
+        toast.success("موفقیت‌آمیز");
+      })
+      .catch((er) => {
+        toast.error("لطفا مجددا تلاش فرمایید");
+      });
+    await reFetchCategory();
+    await reFetchProducts(productDetail.categoryId);
   };
 
   const handleEditProductForm = (e) => {
@@ -48,14 +51,21 @@ export const EditProduct = ({ productDetail }) => {
     }
   };
 
-  const editProductNewImage = () => {
+  const handleRemoveImgFile = () => {
+    setSelectedImage(null);
+    setImgFile(null);
+  };
+
+  const editProductNewImage = async () => {
     if (imgFile) {
       const formData = new FormData();
       formData.append("image", imgFile);
-      PostProductImage(productDetail.id, formData)
-        .then((res) => {
+      await PostProductImage(productDetail.id, formData)
+        .then(async (res) => {
           toast.success("موفقیت آمیز");
-          window.location.reload();
+          await reFetchCategory();
+          await reFetchProducts();
+          await closeModal();
         })
         .catch((er) => {
           console.log("Image Error : " + er);
@@ -147,7 +157,7 @@ export const EditProduct = ({ productDetail }) => {
           <div className="w-56 h-56 flex items-center justify-center overflow-hidden">
             <Image
               priority
-              src={selectedImage || productImage}
+              src={selectedImage || productEditImage}
               width={224}
               height={224}
               alt="icon"
@@ -156,22 +166,31 @@ export const EditProduct = ({ productDetail }) => {
           <div className="w-1/2 h-56 flex flex-col justify-between text-right">
             <div className="w-full h-fit">
               <p className="mb-2">:بارگزاری تصویر محصول</p>
-              <div className="flex items-center justify-center">
-                <label
-                  htmlFor="upload"
-                  className="border border-dashed hover:bg-gray-100 transition-colors text-gray-400 py-3 w-full rounded cursor-pointer flex gap-1 justify-center items-center "
+              {imgFile ? (
+                <div
+                  onClick={handleRemoveImgFile}
+                  className="w-full  text-center text-red-500 bg-red-50 hover:bg-red-100 cursor-pointer py-3 rounded"
                 >
-                  <FaPlus />
-                  <span>تصویر</span>
-                </label>
-                <input
-                  type="file"
-                  id="upload"
-                  accept=".jpg,.jpeg,.png"
-                  className="hidden"
-                  onChange={handleImageChange}
-                />
-              </div>
+                  حذف عکس محصول
+                </div>
+              ) : (
+                <div className="flex items-center justify-center">
+                  <label
+                    htmlFor="editUpload"
+                    className="border border-dashed hover:bg-gray-100 transition-colors text-gray-400 py-3 w-full rounded cursor-pointer flex gap-1 justify-center items-center "
+                  >
+                    <FaPlus />
+                    <span>تصویر</span>
+                  </label>
+                  <input
+                    type="file"
+                    id="editUpload"
+                    accept=".jpg,.jpeg,.png"
+                    className="hidden"
+                    onChange={handleImageChange}
+                  />
+                </div>
+              )}
             </div>
             <div
               onClick={editProductNewImage}
@@ -181,17 +200,6 @@ export const EditProduct = ({ productDetail }) => {
             </div>
           </div>
         </div>
-      </div>
-
-      {/* delete product */}
-      <div className="w-full bg-white p-2 border rounded-lg flex items-center justify-between text-xs">
-        <span
-          onClick={submitDeleteProduct}
-          className="p-2 rounded-[6px] bg-red-50 hover:bg-red-100 text-red-500 cursor-pointer border border-red-200"
-        >
-          حذف
-        </span>
-        <p>آیا میخواهید این محصول را حذف کنید؟</p>
       </div>
     </>
   );

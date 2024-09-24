@@ -28,7 +28,11 @@ export default function Category() {
   return (
     <div className="w-full h-full p-4">
       <CategoryForm reFetch={fetchCategory} />
-      <AvailableCategory categoryList={category} Loading={loading} />
+      <AvailableCategory
+        categoryList={category}
+        Loading={loading}
+        reFetch={fetchCategory}
+      />
     </div>
   );
 }
