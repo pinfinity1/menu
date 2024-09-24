@@ -1,11 +1,19 @@
 import { UpdateCategory } from "@/api/category";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export const EditCategory = ({ categoryDetail, closeModal, reFetch }) => {
   const [editedCategory, setEditedCategory] = useState({ ...categoryDetail });
 
-  const submitEditCategory = async () => {
-    await UpdateCategory(editedCategory.id, { ...editedCategory });
+  const submitEditCategory = async (e) => {
+    e.preventDefault();
+    await UpdateCategory(editedCategory.id, { ...editedCategory })
+      .then((res) => {
+        toast.success("موفقیت‌آمیز");
+      })
+      .catch((er) => {
+        toast.error("لطفا مجددا تلاش فرمایید");
+      });
     await reFetch();
     await closeModal();
   };
