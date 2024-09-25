@@ -16,10 +16,13 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="w-full sticky top-6 z-50 flex flex-row-reverse items-center pr-3 py-4 mt-5 mb-8 rounded-md overflow-x-auto scrollbar-hide bg-primary/25 backdrop-blur-xl drop-shadow-md shadow-lg">
+    <div
+      className="w-full sticky top-6 z-30 flex flex-row-reverse items-center pr-3 py-4 mt-5 mb-8 rounded-md overflow-x-auto scrollbar-hide bg-primary/25 backdrop-blur-xl drop-shadow-md shadow-lg will-change-transform"
+      style={{ transform: "translateZ(0)", WebkitOverflowScrolling: "touch" }}
+    >
       {category?.map((cat) => {
         return <HeaderItems key={cat.id} title={cat.name} id={cat.id} />;
       })}
-    </header>
+    </div>
   );
 };

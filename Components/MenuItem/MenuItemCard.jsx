@@ -30,14 +30,14 @@ function MenuItemCard({ productDetails }) {
         />
       </div>
       <div className="w-full mt-2">
-        <p className="my-2">{name}</p>
+        <p className="my-2 font-bold text-[16px]">{name}</p>
         <div className="text-[12px] flex gap-2 mb-3">
           <p>محتویات:</p>
           <p>{description}</p>
         </div>
-        <p className="text-left flex items-center justify-end">
+        <p className="text-left text-[16px] flex items-center justify-end">
           {persianPrice(price)}
-          <span className="text-[10px] px-1 py-0.5 rounded ml-1 text-primaryDark">
+          <span className="text-[10px] px-1 py-0.5 mt-1 rounded text-primaryDark">
             تومان
           </span>
         </p>
