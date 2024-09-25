@@ -25,10 +25,16 @@ const GetProductImage = async (id) => {
   return data;
 };
 
+const DeleteProductImageById = async (id) => {
+  const { data } = await client.delete(`product/images/${id}`);
+  return data;
+};
+
 export {
   PostProduct,
   UpdateProduct,
   PostProductImage,
   DeleteProductById,
   GetProductImage,
+  DeleteProductImageById,
 };

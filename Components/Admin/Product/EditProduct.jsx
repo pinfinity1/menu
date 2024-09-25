@@ -1,4 +1,8 @@
-import { PostProductImage, UpdateProduct } from "@/api/product";
+import {
+  DeleteProductImageById,
+  PostProductImage,
+  UpdateProduct,
+} from "@/api/product";
 import { persianPrice } from "@/utils/persianPrice";
 import Image from "next/image";
 import { useState } from "react";
@@ -74,6 +78,20 @@ export const EditProduct = ({
     } else {
       toast.error("ابتدا باید تصویر مورد نظر را وارد نمایید");
     }
+  };
+
+  const deleteCurrentProductImageById = async () => {
+    await DeleteProductImageById(productDetail.id)
+      .then(async (res) => {
+        toast.success("عکس با موفقیت حذف شد");
+        await reFetchCategory();
+        await reFetchProducts();
+        await closeModal();
+      })
+      .catch((er) => {
+        console.log(er);
+        toast.error("خطایی رخ داد");
+      });
   };
 
   return (
@@ -171,27 +189,36 @@ export const EditProduct = ({
                   onClick={handleRemoveImgFile}
                   className="w-full  text-center text-red-500 bg-red-50 hover:bg-red-100 cursor-pointer py-3 rounded"
                 >
-                  حذف عکس محصول
+                  حذف عکس
                 </div>
               ) : (
-                <div className="flex items-center justify-center">
-                  <label
-                    htmlFor="editUpload"
-                    className="border border-dashed hover:bg-gray-100 transition-colors text-gray-400 py-3 w-full rounded cursor-pointer flex gap-1 justify-center items-center "
+                <>
+                  <div className="flex items-center justify-center">
+                    <label
+                      htmlFor="editUpload"
+                      className="border border-dashed hover:bg-gray-100 transition-colors text-gray-400 py-3 w-full rounded cursor-pointer flex gap-1 justify-center items-center "
+                    >
+                      <FaPlus />
+                      <span>تصویر</span>
+                    </label>
+                    <input
+                      type="file"
+                      id="editUpload"
+                      accept=".jpg,.jpeg,.png"
+                      className="hidden"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                  <div
+                    onClick={deleteCurrentProductImageById}
+                    className="w-full text-[10px] text-center text-red-500 bg-red-50 hover:bg-red-100 border border-red-200 cursor-pointer py-2 rounded mt-2"
                   >
-                    <FaPlus />
-                    <span>تصویر</span>
-                  </label>
-                  <input
-                    type="file"
-                    id="editUpload"
-                    accept=".jpg,.jpeg,.png"
-                    className="hidden"
-                    onChange={handleImageChange}
-                  />
-                </div>
+                    حذف عکس فعلی محصول
+                  </div>
+                </>
               )}
             </div>
+
             <div
               onClick={editProductNewImage}
               className="w-fit bg-primaryDark/30 hover:bg-primaryDark/70 rounded text-center px-8 py-2 cursor-pointer  transition-all duration-150"
