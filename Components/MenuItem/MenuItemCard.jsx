@@ -5,9 +5,6 @@ import { useState } from "react";
 import { CiImageOn } from "react-icons/ci";
 
 function MenuItemCard({ productDetails }) {
-  const [productImage, setProductImage] = useState(
-    `${process.env.NEXT_PUBLIC_API_URL}product/images/${productDetails.id}`
-  );
   const [imgSize, setImgSize] = useState({ width: 160, height: 160 });
 
   const handleError = () => {
@@ -15,14 +12,14 @@ function MenuItemCard({ productDetails }) {
     setImgSize({ width: 80, height: 80 });
   };
 
-  const { name, price, description } = productDetails;
+  const { name, price, description, image } = productDetails;
 
   return (
     <div dir="rtl" className="w-full flex flex-col p-2 bg-white rounded mb-3">
       <div className="w-40 h-40 rounded overflow-hidden flex items-center justify-center bg-gray-100 border">
         <Image
           priority
-          src={productImage}
+          src={image}
           onError={handleError}
           width={imgSize.width}
           height={imgSize.height}
