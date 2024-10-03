@@ -2,27 +2,22 @@ import Image from "next/image";
 import icon from "../../app/icon.png";
 import { persianPrice } from "@/utils/persianPrice";
 import { useState } from "react";
-import { CiImageOn } from "react-icons/ci";
 
 function MenuItemCard({ productDetails }) {
-  const [imgSize, setImgSize] = useState({ width: 160, height: 160 });
-
-  const handleError = () => {
-    setProductImage(icon);
-    setImgSize({ width: 80, height: 80 });
-  };
-
   const { name, price, description, image } = productDetails;
+
+  const [productImage, setProductImage] = useState(
+    image === null ? icon : image
+  );
 
   return (
     <div dir="rtl" className="w-full flex flex-col p-2 bg-white rounded mb-3">
       <div className="w-40 h-40 rounded overflow-hidden flex items-center justify-center bg-gray-100 border">
         <Image
           priority
-          src={image}
-          onError={handleError}
-          width={imgSize.width}
-          height={imgSize.height}
+          src={productImage}
+          width={image === null ? 80 : 160}
+          height={image === null ? 80 : 160}
           alt="icon"
         />
       </div>
