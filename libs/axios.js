@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://greenfastfood.cocoadownload.com/api/v1/",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 export default client;
