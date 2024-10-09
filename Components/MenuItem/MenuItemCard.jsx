@@ -14,11 +14,11 @@ function MenuItemCard({ productDetails }) {
     <div dir="rtl" className="w-full flex flex-col p-2 bg-white rounded mb-3">
       <div className="w-40 h-40 rounded overflow-hidden flex items-center justify-center bg-gray-100 border">
         <Image
-          priority
           src={productImage}
           width={image === null ? 80 : 160}
-          height={image === null ? 80 : 160}
+          height={image === null ? 80 : 160}np
           alt="icon"
+          loading="lazy"
         />
       </div>
       <div className="w-full mt-2">
