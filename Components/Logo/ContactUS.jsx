@@ -1,15 +1,15 @@
-import { IoClose } from "react-icons/io5";
-import WhyGreenFastFoodImg from "../../public/images/why-green-fast-food.jpeg";
-import Image from "next/image";
-import { MdOutlinePhoneEnabled } from "react-icons/md";
-import { IoLogoInstagram } from "react-icons/io5";
-import { IoMdTime } from "react-icons/io";
+import {IoClose, IoLogoInstagram} from 'react-icons/io5';
+import WhyGreenFastFoodImg from '../../public/images/why-green-fast-food.jpeg';
+import Image from 'next/image';
+import {MdOutlinePhoneEnabled} from 'react-icons/md';
+import {IoMdTime} from 'react-icons/io';
+
 
 export const ContactUS = ({ closeModal, ref }) => {
   return (
     <div
       ref={ref}
-      className="absolute top-0 left-0 w-full h-screen z-50 p-2 overflow-hidden"
+      className="absolute top-0 left-0 w-full h-screen z-50 p-2 overflow-hidden text-black"
     >
       <div className="w-full h-full bg-primaryDark/50 backdrop-blur relative rounded-2xl py-[80px]">
         <div className="absolute top-2 left-2 bg-white rounded-xl shadow border border-white w-9 h-9 flex justify-center items-center text-center cursor-pointer">

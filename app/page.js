@@ -1,9 +1,10 @@
 "use client";
-import { Logo } from "@/Components/Logo/Logo";
-import { Header } from "../Components/Header/Header";
-import { MenuItem } from "@/Components/MenuItem/MenuItem";
-import { useEffect, useState } from "react";
-import { Loader } from "@/Components/Loader/Loader";
+import {Logo} from '@/Components/Logo/Logo';
+import {Header} from '@/Components/Header/Header';
+import {MenuItem} from '@/Components/MenuItem/MenuItem';
+import {useEffect, useState} from 'react';
+import {Loader} from '@/Components/Loader/Loader';
+
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -19,7 +20,8 @@ export default function Home() {
       {loading ? (
         <Loader />
       ) : (
-        <main className="w-full relative md:max-w-[80%] lg:max-w-[40%] mx-auto h-full md:border md:shadow font-picoopic px-4 pt-4">
+          <main
+              className="w-full relative md:max-w-[80%] lg:max-w-[40%] mx-auto h-full md:border md:shadow font-picoopic px-4 py-4">
           <Logo />
           <Header />
           <MenuItem />
