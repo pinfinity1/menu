@@ -51,3 +51,9 @@ input::placeholder {
   width: 160px;
   white-space: nowrap;
 }
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
+}

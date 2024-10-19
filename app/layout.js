@@ -1,19 +1,22 @@
-import "./globals.css";
-import { CategoryIdProvider } from "@/context/CategoryIdContext";
-import { Toaster } from "react-hot-toast";
+import './globals.css';
+import {CategoryIdProvider} from '@/context/CategoryIdContext';
+import {Toaster} from 'react-hot-toast';
+
 
 export const metadata = {
-  title: "Green FastFood",
-  description: "ُThe First Handmade FastFood",
+  title: 'Green FastFood',
+  description: 'ُThe First Handmade FastFood',
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({children}) {
   return (
-    <html lang="fa">
+      <html lang="fa">
       <body>
-        <CategoryIdProvider>{children}</CategoryIdProvider>
-        <Toaster position="bottom-right" />
+      <CategoryIdProvider>
+        {children}
+      </CategoryIdProvider>
+      <Toaster position="bottom-right"/>
       </body>
-    </html>
+      </html>
   );
 }

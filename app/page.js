@@ -1,32 +1,19 @@
-"use client";
 import {Logo} from '@/Components/Logo/Logo';
 import {Header} from '@/Components/Header/Header';
 import {MenuItem} from '@/Components/MenuItem/MenuItem';
-import {useEffect, useState} from 'react';
-import {Loader} from '@/Components/Loader/Loader';
+import {Suspense} from 'react';
+import Loading from '@/app/loading';
 
 
-export default function Home() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 3000);
-
-    return () => clearTimeout(timer);
-  }, []);
-
+export default async function Home() {
   return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
-          <main
-              className="w-full relative md:max-w-[80%] lg:max-w-[40%] mx-auto h-full md:border md:shadow font-picoopic px-4 py-4">
-          <Logo />
-          <Header />
-          <MenuItem />
-        </main>
-      )}
-    </>
+      <main
+          className="w-full relative md:max-w-[80%] lg:max-w-[40%] mx-auto h-full md:border md:shadow font-picoopic px-4 py-4">
+        <Suspense fallback={<Loading/>}>
+          <Logo/>
+          <Header/>
+          <MenuItem/>
+        </Suspense>
+      </main>
   );
 }

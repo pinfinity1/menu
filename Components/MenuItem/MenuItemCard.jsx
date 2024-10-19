@@ -1,28 +1,48 @@
 import Image from 'next/image';
-import icon from '../../app/icon.png';
 import {persianPrice} from '@/utils/persianPrice';
 import {useState} from 'react';
 
 
 function MenuItemCard({productDetails}) {
-  const {name, price, description, image} = productDetails;
+  const {name, price, description, image, id} = productDetails;
 
-  const [productImage, setProductImage] = useState(
-      image === null ? icon : image,
-  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
+  // const [productImage, setProductImage] = useState(
+  //     image === null ? icon : image,
+  // );
+  const handleErrorImage = () => {
+    setIsLoading(false);
+    setIsError(true);
+  };
+  
   return (
       <div dir="rtl"
            className="w-full flex flex-col p-2 bg-white rounded text-black">
         <div
-            className="w-40 h-40 rounded overflow-hidden flex items-center justify-center bg-gray-100 border">
-          <Image
-              src={productImage}
-              width={image === null ? 80 : 160}
-              height={image === null ? 80 : 160}
-              alt="icon"
-              loading="lazy"
-          />
+            className="w-40 h-40 rounded overflow-hidden flex items-center justify-center shadow">
+          {isError ?
+              <>
+                <Image src="images/sabz.jpg"
+                       alt={'icon'}
+                       width={80}
+                       height={80}/>
+              </> :
+              <Image
+                  src={`https://greenfastfood.cocoadownload.com/api/v1/product/images/${id}`}
+                  width={160}
+                  height={160}
+                  alt="Product Image"
+                  loading="lazy"
+                  quality="75"
+                  onLoad={() => setIsLoading(false)}
+                  onError={handleErrorImage}
+                  className={`${isLoading
+                      ? 'bg-primaryDark/20 animate-pulse'
+                      : 'block'}`}
+              />
+          }
         </div>
         <div className="w-full mt-2">
           <p className="my-2 font-bold text-[16px]">{name}</p>
