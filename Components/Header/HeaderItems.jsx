@@ -6,12 +6,12 @@ import {Button} from '@/Components/ui/button';
 export const HeaderItems = ({title, id}) => {
   const {categoryId, setCategoryId} = useContext(CategoryIdContext);
 
-  const handleContext = () => {
-    setCategoryId(id);
-    window.scrollTo({
+  const handleContext = async () => {
+    await window.scrollTo({
       top: 0,
       behavior: 'smooth',
     });
+    await setCategoryId(id);
   };
 
   return (

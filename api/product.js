@@ -21,7 +21,9 @@ const PostProductImage = async (id, payload) => {
 };
 
 const GetProductImage = async (id) => {
-  const {data} = await client.get(`product/images/${id}`);
+  const {data} = await client.get(`product/images/${id}`, {
+    responseType: 'blob',
+  });
   return data;
 };
 

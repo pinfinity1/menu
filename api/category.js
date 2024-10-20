@@ -1,7 +1,7 @@
 import client from '../lib/axios';
 
 
-const GetCategory = async (eager = 'false') => {
+const GetCategory = async (eager) => {
   const {data} = await client.get(`category?eager=${eager}`);
   return data;
 };

@@ -14,8 +14,10 @@ export const MenuItem = () => {
   const {categoryId} = useContext(CategoryIdContext);
 
   const {data, isLoading, isError, error} = useQuery({
-    queryKey: ['category'],
+    queryKey: ['category', true],
     queryFn: () => GetCategory(true),
+    staleTime: Infinity,
+    cacheTime: Infinity,
   });
 
   let content;
